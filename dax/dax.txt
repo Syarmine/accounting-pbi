@@ -1,0 +1,53 @@
+/* This file contains all the 7 DAX measures for the dashboard 
+This DAX measures are prepared by Syarmine for the client's data.
+To copy the measures to your Power BI, follow these steps:
+    1. Open Power BI Desktop
+    2. Go to Home > Calculations
+    3. Click on New measure
+    4. Copy the measures from this file one by one into relevant measure name
+    5. Click on OK
+
+Copy the measure below // signage. */
+
+// 1. Revenue //
+Revenue = 
+SUM(FactSales[Sales])
+
+// 2. Revenue YoY$ //
+Revenue YoY% = 
+VAR __PREV_YEAR = CALCULATE([Revenue], DimDate[Year] = 2020)
+VAR __CURR_YEAR = CALCULATE([Revenue], DimDate[Year] = 2021)
+
+RETURN
+DIVIDE(__CURR_YEAR - __PREV_YEAR, __PREV_YEAR, 0)
+
+// 3. Revenue YoY% //
+Revenue YoY$ = 
+VAR __PREV_YEAR = CALCULATE([Revenue], DimDate[Year] = 2020)
+VAR __CURR_YEAR = CALCULATE([Revenue], DimDate[Year] = 2021)
+
+RETURN
+__CURR_YEAR - __PREV_YEAR
+
+**Parameter**
+// 4. Discount Shipping % //
+Discount Shipping % Value = SELECTEDVALUE('Discount Shipping %'[Discount Shipping %])
+
+// 5. Increase in Demand % //
+Increase in Demand % Value = SELECTEDVALUE('Increase in Demand %'[Increase in Demand %])
+
+// 6. Overall Profit //
+overall_profit = 
+VAR profit_product = CALCULATE(SUM(FactOnlineSales[Revenue Product Sales]))-CALCULATE(SUM(FactOnlineSales[Product Cost]))
+VAR profit_shipping = CALCULATE(SUM(FactOnlineSales[Shipping Charge]))-CALCULATE(SUM(FactOnlineSales[Shipping Cost]))
+VAR overall = profit_product + profit_shipping
+RETURN
+overall
+
+// 7. New Profit //
+new_profit = 
+VAR shipping_charge_discount = [overall_profit]- (SUM(FactOnlineSales[Shipping Charge])*('Discount Shipping %'[Discount Shipping % Value]/100))
+VAR demand_increase = (1+'Increase in Demand %'[Increase in Demand % Value]/100)
+VAR new_profit = shipping_charge_discount * demand_increase
+RETURN
+new_profit

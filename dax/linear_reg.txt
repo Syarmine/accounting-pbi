@@ -1,0 +1,30 @@
+/* This file contains all the 3 DAX measures for new table creation using LINESTX function.
+
+To create new table, follow these steps:
+    1. Go to Home > Modeling > New Table
+    2. Copy and paste the code below into the formula bar
+    3. Click OK 
+ 
+This DAX measure is used to create a new table that contains 
+the regression coefficients for the linear regression model.
+This DAX is prepared by Syarmine*/
+
+1. Linear Regression Age to Sales
+reg_age = LINESTX(PredictData,
+        [Sales], [Age])
+
+
+2. Linear Regression Income to Sales
+reg_income = LINESTX(PredictData,
+        [Sales], [Income])
+
+3. Linear Regression Gender to Sales
+reg_gender = LINESTX(PredictData,
+        [Sales], [GenderDummy])
+
+4. Linear Regression Income, Age and Gender to Sales
+reg_income_age_gender = LINESTX(PredictData,
+        [Sales],
+        [Income], [Age], [GenderDummy]
+    )
+

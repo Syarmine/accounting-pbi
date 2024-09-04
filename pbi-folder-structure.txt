@@ -1,0 +1,18 @@
+PowerBI_Dashboard_Project/
+├── data/
+│   └── Raw/
+├── reports/
+│   └── Main_Dashboard.pbix
+│   
+├── docs/
+│   ├── Requirements/
+│   ├── Data_Dictionary/
+│   └── User_Guide/
+├── scripts/
+│   └──python
+│
+├── assets/
+│   ├── Images/
+│   └── Logos/
+├── dax/
+    └── measures.dax
